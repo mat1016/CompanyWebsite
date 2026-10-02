@@ -1,4 +1,4 @@
-```python
+
 from flask import Flask, render_template, request, redirect
 import sqlite3
 
@@ -7,57 +7,15 @@ app = Flask(__name__)
 DATABASE = "company.db"
 
 
-# =========================
-# اتصال به دیتابیس
-# =========================
-
 def get_db():
     conn = sqlite3.connect(DATABASE)
     conn.row_factory = sqlite3.Row
     return conn
 
 
-# =========================
-# اطلاعات شرکت
-# =========================
-
-def get_company():
-    conn = get_db()
-
-    company = conn.execute(
-        "SELECT * FROM company WHERE id = 1"
-    ).fetchone()
-
-    conn.close()
-
-    return company
-
-
-# =========================
-# اعضای تیم
-# =========================
-
-def get_team():
-    conn = get_db()
-
-    team = conn.execute(
-        "SELECT * FROM team ORDER BY id"
-    ).fetchall()
-
-    conn.close()
-
-    return team
-
-
-# =========================
-# ساخت دیتابیس
-# =========================
-
 def init_database():
-
     conn = get_db()
 
-    # جدول شرکت
     conn.execute("""
         CREATE TABLE IF NOT EXISTS company (
             id INTEGER PRIMARY KEY,
@@ -71,7 +29,6 @@ def init_database():
         )
     """)
 
-    # جدول اعضای تیم
     conn.execute("""
         CREATE TABLE IF NOT EXISTS team (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -84,137 +41,98 @@ def init_database():
         )
     """)
 
-    # =========================
-    # ایجاد اطلاعات شرکت
-    # =========================
-
     company = conn.execute(
-        "SELECT * FROM company WHERE id = 1"
+        "SELECT id FROM company WHERE id = 1"
     ).fetchone()
 
     if company is None:
-
-        conn.execute("""
+        conn.execute(
+            """
             INSERT INTO company
-            (
-                id,
-                name,
-                title,
-                description,
-                services,
-                about,
-                phone,
-                email
-            )
+            (id, name, title, description, services, about, phone, email)
             VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-        """, (
-            1,
-            "پرلیت کاوان سبز",
-            "مهندسین مشاور",
+            """,
+            (
+                1,
+                "پرلیت کاوان سبز",
+                "مهندسین مشاور",
+                "شرکت پرلیت کاوان سبز از سال 1387 در عرصه های ملی و بین المللی با ارائه راهکارهای نوین و خدمات حرفه‌ای برای رشد کسب‌وکار و همچنین استفاده از علم مهندسین با تجربه پروژه های بزرگی را به سر انجام رسانده اند",
+                "مشاوره در عرصه های ژئوفیزیک، زمین شناسی، ژئوتکنیک، ژئولوژی و ...",
+                "ما با ارائه خدمات حرفه‌ای و استفاده از فناوری‌های جدید، به کسب‌وکارها کمک می‌کنیم حضور قدرتمندتری در فضای کار داشته باشند.",
+                "02177074548",
+                "Perlit.k.s@gmail.com"
+            )
+        )
 
-            "شرکت پرلیت کاوان سبز از سال 1387 در عرصه های ملی و بین المللی با ارائه راهکارهای نوین و خدمات حرفه‌ای برای رشد کسب‌وکار و همچنین استفاده از علم مهندسین با تجربه پروژه های بزرگی را به سر انجام رسانده اند",
-
-            "مشاوره در عرصه های ژئوفیزیک، زمین شناسی، ژئوتکنیک، ژئولوژی و ...",
-
-            "ما با ارائه خدمات حرفه‌ای و استفاده از فناوری‌های جدید، به کسب‌وکارها کمک می‌کنیم حضور قدرتمندتری در فضای کار داشته باشند.",
-
-            "02177074548",
-
-            "Perlit.k.s@gmail.com"
-        ))
-
-    # =========================
-    # ایجاد اعضای اولیه تیم
-    # =========================
-
-    team_count = conn.execute(
+    count = conn.execute(
         "SELECT COUNT(*) FROM team"
     ).fetchone()[0]
 
-    if team_count == 0:
+    if count == 0:
 
-        # مدیرعامل اول
-        conn.execute("""
-            INSERT INTO team
+        members = [
             (
-                name,
-                position,
-                education,
-                experience,
-                specialty,
-                bio
+                "نام مدیرعامل اول",
+                "مدیرعامل",
+                "مهندس ...",
+                "مثلاً ۱۵ سال",
+                "مدیریت و مهندسی",
+                "رزومه مدیرعامل اول در این قسمت قرار می‌گیرد."
+            ),
+            (
+                "نام مدیرعامل دوم",
+                "مدیرعامل",
+                "مهندس ...",
+                "مثلاً ۱۲ سال",
+                "مدیریت پروژه",
+                "رزومه مدیرعامل دوم در این قسمت قرار می‌گیرد."
+            ),
+            (
+                "نام کارمند",
+                "کارشناس",
+                "مهندس ...",
+                "مثلاً ۵ سال",
+                "زمین شناسی و ژئوتکنیک",
+                "رزومه این کارمند در این قسمت قرار می‌گیرد."
             )
-            VALUES (?, ?, ?, ?, ?, ?)
-        """, (
-            "نام مدیرعامل اول",
-            "مدیرعامل",
-            "مهندس ...",
-            "مثلاً ۱۵ سال",
-            "مدیریت و مهندسی",
-            "رزومه مدیرعامل اول در این قسمت قرار می‌گیرد."
-        ))
+        ]
 
-        # مدیرعامل دوم
-        conn.execute("""
+        conn.executemany(
+            """
             INSERT INTO team
-            (
-                name,
-                position,
-                education,
-                experience,
-                specialty,
-                bio
-            )
+            (name, position, education, experience, specialty, bio)
             VALUES (?, ?, ?, ?, ?, ?)
-        """, (
-            "نام مدیرعامل دوم",
-            "مدیرعامل",
-            "مهندس ...",
-            "مثلاً ۱۲ سال",
-            "مدیریت پروژه",
-            "رزومه مدیرعامل دوم در این قسمت قرار می‌گیرد."
-        ))
-
-        # کارمند
-        conn.execute("""
-            INSERT INTO team
-            (
-                name,
-                position,
-                education,
-                experience,
-                specialty,
-                bio
-            )
-            VALUES (?, ?, ?, ?, ?, ?)
-        """, (
-            "نام کارمند",
-            "کارشناس",
-            "مهندس ...",
-            "مثلاً ۵ سال",
-            "زمین شناسی و ژئوتکنیک",
-            "رزومه این کارمند در این قسمت قرار می‌گیرد."
-        ))
+            """,
+            members
+        )
 
     conn.commit()
     conn.close()
 
 
-# ==================================================
-# خیلی مهم:
-# دیتابیس هنگام اجرای Render هم ساخته شود
-# ==================================================
+def get_company():
+    conn = get_db()
+    company = conn.execute(
+        "SELECT * FROM company WHERE id = 1"
+    ).fetchone()
+    conn.close()
+    return company
+
+
+def get_team():
+    conn = get_db()
+    team = conn.execute(
+        "SELECT * FROM team ORDER BY id"
+    ).fetchall()
+    conn.close()
+    return team
+
 
 init_database()
 
 
-# =========================
-# صفحه اصلی سایت
-# =========================
-
 @app.route("/")
 def home():
-
     company = get_company()
     team = get_team()
 
@@ -225,27 +143,21 @@ def home():
     )
 
 
-# =========================
-# پنل مدیریت
-# =========================
-
 @app.route("/admin", methods=["GET", "POST"])
 def admin():
 
     if request.method == "POST":
 
-        # =========================
-        # ذخیره اطلاعات شرکت
-        # =========================
+        form_type = request.form.get("form_type")
 
-        if request.form.get("form_type") == "company":
+        if form_type == "company":
 
             conn = get_db()
 
-            conn.execute("""
+            conn.execute(
+                """
                 UPDATE company
-                SET
-                    name = ?,
+                SET name = ?,
                     title = ?,
                     description = ?,
                     services = ?,
@@ -253,50 +165,50 @@ def admin():
                     phone = ?,
                     email = ?
                 WHERE id = 1
-            """, (
-                request.form["name"],
-                request.form["title"],
-                request.form["description"],
-                request.form["services"],
-                request.form["about"],
-                request.form["phone"],
-                request.form["email"]
-            ))
+                """,
+                (
+                    request.form["name"],
+                    request.form["title"],
+                    request.form["description"],
+                    request.form["services"],
+                    request.form["about"],
+                    request.form["phone"],
+                    request.form["email"]
+                )
+            )
 
             conn.commit()
             conn.close()
 
             return redirect("/admin")
 
-        # =========================
-        # ذخیره اطلاعات عضو تیم
-        # =========================
-
-        if request.form.get("form_type") == "team":
+        if form_type == "team":
 
             member_id = request.form["member_id"]
 
             conn = get_db()
 
-            conn.execute("""
+            conn.execute(
+                """
                 UPDATE team
-                SET
-                    name = ?,
+                SET name = ?,
                     position = ?,
                     education = ?,
                     experience = ?,
                     specialty = ?,
                     bio = ?
                 WHERE id = ?
-            """, (
-                request.form["name"],
-                request.form["position"],
-                request.form["education"],
-                request.form["experience"],
-                request.form["specialty"],
-                request.form["bio"],
-                member_id
-            ))
+                """,
+                (
+                    request.form["name"],
+                    request.form["position"],
+                    request.form["education"],
+                    request.form["experience"],
+                    request.form["specialty"],
+                    request.form["bio"],
+                    member_id
+                )
+            )
 
             conn.commit()
             conn.close()
@@ -313,34 +225,26 @@ def admin():
     )
 
 
-# =========================
-# افزودن عضو جدید
-# =========================
-
 @app.route("/admin/team/add", methods=["POST"])
 def add_team_member():
 
     conn = get_db()
 
-    conn.execute("""
+    conn.execute(
+        """
         INSERT INTO team
-        (
-            name,
-            position,
-            education,
-            experience,
-            specialty,
-            bio
-        )
+        (name, position, education, experience, specialty, bio)
         VALUES (?, ?, ?, ?, ?, ?)
-    """, (
-        "عضو جدید",
-        "سمت جدید",
-        "",
-        "",
-        "",
-        "رزومه و توضیحات این عضو را وارد کنید."
-    ))
+        """,
+        (
+            "عضو جدید",
+            "سمت جدید",
+            "",
+            "",
+            "",
+            "رزومه و توضیحات این عضو را وارد کنید."
+        )
+    )
 
     conn.commit()
     conn.close()
@@ -348,14 +252,7 @@ def add_team_member():
     return redirect("/admin")
 
 
-# =========================
-# حذف عضو تیم
-# =========================
-
-@app.route(
-    "/admin/team/delete/<int:member_id>",
-    methods=["POST"]
-)
+@app.route("/admin/team/delete/<int:member_id>", methods=["POST"])
 def delete_team_member(member_id):
 
     conn = get_db()
@@ -371,10 +268,6 @@ def delete_team_member(member_id):
     return redirect("/admin")
 
 
-# =========================
-# اجرای برنامه در کامپیوتر
-# =========================
-
 if __name__ == "__main__":
     app.run(debug=True)
-```
+    
