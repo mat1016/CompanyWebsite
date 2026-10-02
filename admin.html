@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>پنل مدیریت | {{ company.name }}</title>
+
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+
+        body {
+
+            margin: 0;
+
+            font-family: Tahoma, Arial, sans-serif;
+
+            background: #f1f5f9;
+
+            color: #172033;
+
+            line-height: 1.8;
+        }
+
+
+        .container {
+
+            width: 92%;
+
+            max-width: 1100px;
+
+            margin: auto;
+        }
+
+
+        /* =========================
+           HEADER
+        ========================= */
+
+        header {
+
+            background: #071426;
+
+            color: white;
+
+            padding: 25px 0;
+
+            margin-bottom: 35px;
+        }
+
+
+        header h1 {
+
+            margin: 0;
+
+            font-size: 28px;
+        }
+
+
+        .back {
+
+            display: inline-block;
+
+            margin-top: 8px;
+
+            color: #38bdf8;
+
+            text-decoration: none;
+        }
+
+
+        /* =========================
+           BOX
+        ========================= */
+
+        .box {
+
+            background: white;
+
+            padding: 30px;
+
+            margin-bottom: 30px;
+
+            border-radius: 16px;
+
+            box-shadow:
+                0 10px 30px rgba(0, 0, 0, 0.08);
+        }
+
+
+        .box h2 {
+
+            margin-top: 0;
+
+            color: #0369a1;
+
+            font-size: 25px;
+        }
+
+
+        /* =========================
+           NOTE
+        ========================= */
+
+        .note {
+
+            background: #e0f2fe;
+
+            padding: 15px 18px;
+
+            border-radius: 10px;
+
+            color: #075985;
+
+            margin-bottom: 25px;
+        }
+
+
+        /* =========================
+           FORM
+        ========================= */
+
+        label {
+
+            display: block;
+
+            margin-top: 18px;
+
+            margin-bottom: 7px;
+
+            font-weight: bold;
+        }
+
+
+        input,
+        textarea {
+
+            width: 100%;
+
+            padding: 13px;
+
+            border: 1px solid #cbd5e1;
+
+            border-radius: 8px;
+
+            font-family: inherit;
+
+            font-size: 15px;
+
+            outline: none;
+        }
+
+
+        input:focus,
+        textarea:focus {
+
+            border-color: #0284c7;
+
+            box-shadow:
+                0 0 0 3px rgba(2, 132, 199, 0.1);
+        }
+
+
+        textarea {
+
+            min-height: 120px;
+
+            resize: vertical;
+        }
+
+
+        /* =========================
+           BUTTONS
+        ========================= */
+
+        button {
+
+            margin-top: 20px;
+
+            padding: 12px 24px;
+
+            border: none;
+
+            border-radius: 8px;
+
+            background: #0284c7;
+
+            color: white;
+
+            font-family: inherit;
+
+            font-size: 15px;
+
+            cursor: pointer;
+
+            transition: 0.2s;
+        }
+
+
+        button:hover {
+
+            background: #0369a1;
+
+            transform: translateY(-1px);
+        }
+
+
+        .save-button {
+
+            background: #0284c7;
+        }
+
+
+        .delete-button {
+
+            background: #dc2626;
+
+            margin-right: 8px;
+        }
+
+
+        .delete-button:hover {
+
+            background: #b91c1c;
+        }
+
+
+        /* =========================
+           ADD MEMBER
+        ========================= */
+
+        .add-box {
+
+            margin-top: 35px;
+
+            padding-top: 25px;
+
+            border-top: 1px solid #e2e8f0;
+        }
+
+
+        .add-button {
+
+            width: 100%;
+
+            background: #16a34a;
+
+            font-size: 17px;
+
+            padding: 15px;
+        }
+
+
+        .add-button:hover {
+
+            background: #15803d;
+        }
+
+
+        /* =========================
+           TEAM MEMBER
+        ========================= */
+
+        .team-member {
+
+            border: 1px solid #e2e8f0;
+
+            padding: 25px;
+
+            border-radius: 14px;
+
+            margin-top: 25px;
+
+            background: #f8fafc;
+        }
+
+
+        .team-member h3 {
+
+            margin-top: 0;
+
+            margin-bottom: 20px;
+
+            color: #0f172a;
+
+            font-size: 21px;
+        }
+
+
+        .member-number {
+
+            color: #0284c7;
+
+            font-size: 14px;
+
+            margin-right: 5px;
+        }
+
+
+        /* =========================
+           EMPTY MESSAGE
+        ========================= */
+
+        .empty {
+
+            text-align: center;
+
+            padding: 30px;
+
+            color: #64748b;
+        }
+
+
+        /* =========================
+           MOBILE
+        ========================= */
+
+        @media (max-width: 700px) {
+
+            .container {
+
+                width: 94%;
+            }
+
+
+            .box {
+
+                padding: 20px;
+            }
+
+
+            header h1 {
+
+                font-size: 22px;
+            }
+
+
+            button {
+
+                width: 100%;
+
+                margin-right: 0;
+            }
+
+
+            .delete-button {
+
+                margin-right: 0;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================================
+     HEADER
+========================================= -->
+
+<header>
+
+    <div class="container">
+
+        <h1>
+            ⚙️ پنل مدیریت {{ company.name }}
+        </h1>
+
+
+        <a
+            href="/"
+            class="back"
+        >
+            ← مشاهده سایت اصلی
+        </a>
+
+    </div>
+
+</header>
+
+
+
+<div class="container">
+
+
+    <!-- =========================================
+         COMPANY
+    ========================================= -->
+
+    <div class="box">
+
+        <h2>
+            🏢 اطلاعات شرکت
+        </h2>
+
+
+        <form method="POST">
+
+
+            <input
+                type="hidden"
+                name="form_type"
+                value="company"
+            >
+
+
+            <label>
+                نام شرکت
+            </label>
+
+            <input
+                type="text"
+                name="name"
+                value="{{ company.name }}"
+                required
+            >
+
+
+            <label>
+                عنوان اصلی سایت
+            </label>
+
+            <input
+                type="text"
+                name="title"
+                value="{{ company.title }}"
+                required
+            >
+
+
+            <label>
+                توضیحات صفحه اصلی
+            </label>
+
+            <textarea
+                name="description"
+            >{{ company.description }}</textarea>
+
+
+            <label>
+                خدمات شرکت
+            </label>
+
+            <textarea
+                name="services"
+            >{{ company.services }}</textarea>
+
+
+            <label>
+                درباره شرکت
+            </label>
+
+            <textarea
+                name="about"
+            >{{ company.about }}</textarea>
+
+
+            <label>
+                شماره تماس
+            </label>
+
+            <input
+                type="text"
+                name="phone"
+                value="{{ company.phone }}"
+            >
+
+
+            <label>
+                ایمیل
+            </label>
+
+            <input
+                type="email"
+                name="email"
+                value="{{ company.email }}"
+            >
+
+
+            <button
+                type="submit"
+                class="save-button"
+            >
+                💾 ذخیره اطلاعات شرکت
+            </button>
+
+
+        </form>
+
+    </div>
+
+
+
+    <!-- =========================================
+         TEAM
+    ========================================= -->
+
+    <div class="box">
+
+
+        <h2>
+            👥 مدیریت مدیران و کارکنان
+        </h2>
+
+
+        <div class="note">
+
+            از این قسمت می‌توانی تمام اعضای شرکت را مدیریت کنی.
+
+            <br>
+
+            می‌توانی مدیرعامل، حسابدار، مدیر پروژه،
+            کارشناس، منشی و هر فرد دیگری را اضافه یا حذف کنی.
+
+        </div>
+
+
+
+        <!-- =====================================
+             MEMBERS
+        ===================================== -->
+
+        {% if team %}
+
+
+            {% for member in team %}
+
+
+            <div class="team-member">
+
+
+                <h3>
+
+                    👤
+
+                    <span class="member-number">
+                        عضو {{ loop.index }}
+                    </span>
+
+                    {{ member.name }}
+
+                </h3>
+
+
+                <form method="POST">
+
+
+                    <input
+                        type="hidden"
+                        name="form_type"
+                        value="team"
+                    >
+
+
+                    <input
+                        type="hidden"
+                        name="member_id"
+                        value="{{ member.id }}"
+                    >
+
+
+                    <!-- NAME -->
+
+                    <label>
+                        نام و نام خانوادگی
+                    </label>
+
+                    <input
+                        type="text"
+                        name="name"
+                        value="{{ member.name }}"
+                        required
+                    >
+
+
+                    <!-- POSITION -->
+
+                    <label>
+                        سمت
+                    </label>
+
+                    <input
+                        type="text"
+                        name="position"
+                        value="{{ member.position }}"
+                        required
+                    >
+
+
+                    <!-- EDUCATION -->
+
+                    <label>
+                        تحصیلات
+                    </label>
+
+                    <input
+                        type="text"
+                        name="education"
+                        value="{{ member.education }}"
+                    >
+
+
+                    <!-- EXPERIENCE -->
+
+                    <label>
+                        سابقه کاری
+                    </label>
+
+                    <input
+                        type="text"
+                        name="experience"
+                        value="{{ member.experience }}"
+                    >
+
+
+                    <!-- SPECIALTY -->
+
+                    <label>
+                        زمینه تخصصی
+                    </label>
+
+                    <input
+                        type="text"
+                        name="specialty"
+                        value="{{ member.specialty }}"
+                    >
+
+
+                    <!-- BIO -->
+
+                    <label>
+                        رزومه و توضیحات
+                    </label>
+
+                    <textarea
+                        name="bio"
+                    >{{ member.bio }}</textarea>
+
+
+                    <!-- SAVE -->
+
+                    <button
+                        type="submit"
+                        class="save-button"
+                    >
+                        💾 ذخیره تغییرات
+                    </button>
+
+
+                    <!-- DELETE -->
+
+                    <button
+                        type="submit"
+                        class="delete-button"
+                        formaction="/admin/team/delete/{{ member.id }}"
+                        formmethod="POST"
+                    >
+                        🗑️ حذف عضو
+                    </button>
+
+
+                </form>
+
+
+            </div>
+
+
+            {% endfor %}
+
+
+        {% else %}
+
+
+            <div class="empty">
+
+                هنوز هیچ عضوی ثبت نشده است.
+
+            </div>
+
+
+        {% endif %}
+
+
+
+        <!-- =====================================
+             ADD MEMBER
+        ===================================== -->
+
+        <div class="add-box">
+
+
+            <form
+                method="POST"
+                action="/admin/team/add"
+            >
+
+
+                <button
+                    type="submit"
+                    class="add-button"
+                >
+                    ➕ افزودن عضو جدید
+                </button>
+
+
+            </form>
+
+
+        </div>
+
+
+    </div>
+
+
+</div>
+
+
+
+</body>
+
+</html>

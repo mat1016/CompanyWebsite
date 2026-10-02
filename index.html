@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{{ company.name }}</title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='style.css') }}"
+    >
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================
+     HEADER
+===================================== -->
+
+<header>
+
+    <div class="container navbar">
+
+
+        <div class="logo">
+            {{ company.name }}
+        </div>
+
+
+        <nav>
+
+            <a href="#home">
+                خانه
+            </a>
+
+            <a href="#about">
+                درباره ما
+            </a>
+
+            <a href="#services">
+                خدمات
+            </a>
+
+            <a href="#team">
+                مدیریت و تیم
+            </a>
+
+            <a href="#projects">
+                پروژه‌ها
+            </a>
+
+            <a href="#contact">
+                تماس با ما
+            </a>
+
+        </nav>
+
+
+    </div>
+
+</header>
+
+
+
+<!-- =====================================
+     HERO
+===================================== -->
+
+<section
+    id="home"
+    class="hero"
+>
+
+
+    <div class="container">
+
+
+        <span class="hero-label">
+            مهندسین مشاور
+        </span>
+
+
+        <h1>
+            {{ company.title }}
+        </h1>
+
+
+        <p>
+            {{ company.description }}
+        </p>
+
+
+        <div class="buttons">
+
+
+            <a
+                href="#projects"
+                class="button"
+            >
+                مشاهده پروژه‌ها
+            </a>
+
+
+            <a
+                href="#contact"
+                class="button button-outline"
+            >
+                تماس با ما
+            </a>
+
+
+        </div>
+
+
+    </div>
+
+
+</section>
+
+
+
+<!-- =====================================
+     ABOUT
+===================================== -->
+
+<section
+    id="about"
+    class="section"
+>
+
+
+    <div class="container about">
+
+
+        <div class="about-image">
+
+
+            <img
+                src="{{ url_for('static', filename='images/project1.jpeg') }}"
+                alt="تصویر شرکت"
+            >
+
+
+        </div>
+
+
+
+        <div class="about-text">
+
+
+            <span class="section-label">
+                درباره ما
+            </span>
+
+
+            <h2>
+                درباره {{ company.name }}
+            </h2>
+
+
+            <p>
+                {{ company.about }}
+            </p>
+
+
+        </div>
+
+
+    </div>
+
+
+</section>
+
+
+
+<!-- =====================================
+     SERVICES
+===================================== -->
+
+<section
+    id="services"
+    class="section services"
+>
+
+
+    <div class="container">
+
+
+        <div class="section-title">
+
+
+            <span class="section-label">
+                خدمات ما
+            </span>
+
+
+            <h2>
+                خدمات حرفه‌ای ما
+            </h2>
+
+
+            <p>
+                {{ company.services }}
+            </p>
+
+
+        </div>
+
+
+
+        <div class="service-grid">
+
+
+            <!-- خدمت اول -->
+
+            <div class="service-card">
+
+
+                <span>
+                    01
+                </span>
+
+
+                <h3>
+                    ژئوفیزیک
+                </h3>
+
+
+                <p>
+                    ارائه خدمات مطالعات و مشاوره تخصصی در زمینه ژئوفیزیک.
+                </p>
+
+
+            </div>
+
+
+
+            <!-- خدمت دوم -->
+
+            <div class="service-card">
+
+
+                <span>
+                    02
+                </span>
+
+
+                <h3>
+                    زمین شناسی
+                </h3>
+
+
+                <p>
+                    انجام مطالعات تخصصی زمین شناسی و بررسی شرایط زمین.
+                </p>
+
+
+            </div>
+
+
+
+            <!-- خدمت سوم -->
+
+            <div class="service-card">
+
+
+                <span>
+                    03
+                </span>
+
+
+                <h3>
+                    ژئوتکنیک
+                </h3>
+
+
+                <p>
+                    ارائه خدمات مهندسی و مطالعات تخصصی ژئوتکنیک.
+                </p>
+
+
+            </div>
+
+
+
+            <!-- خدمت چهارم -->
+
+            <div class="service-card">
+
+
+                <span>
+                    04
+                </span>
+
+
+                <h3>
+                    ژئولوژی
+                </h3>
+
+
+                <p>
+                    مطالعات و بررسی‌های تخصصی در زمینه زمین و منابع.
+                </p>
+
+
+            </div>
+
+
+
+            <!-- خدمت پنجم -->
+
+            <div class="service-card">
+
+
+                <span>
+                    05
+                </span>
+
+
+                <h3>
+                    مشاوره مهندسی
+                </h3>
+
+
+                <p>
+                    ارائه راهکارهای مهندسی و مشاوره تخصصی برای پروژه‌ها.
+                </p>
+
+
+            </div>
+
+
+
+            <!-- خدمت ششم -->
+
+            <div class="service-card">
+
+
+                <span>
+                    06
+                </span>
+
+
+                <h3>
+                    مطالعات پروژه
+                </h3>
+
+
+                <p>
+                    انجام مطالعات تخصصی و تهیه راهکار مناسب برای پروژه‌ها.
+                </p>
+
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+</section>
+
+
+
+<!-- =====================================
+     TEAM
+===================================== -->
+
+<section
+    id="team"
+    class="section team"
+>
+
+
+    <div class="container">
+
+
+        <div class="section-title">
+
+
+            <span class="section-label">
+                تیم ما
+            </span>
+
+
+            <h2>
+                مدیران و متخصصان شرکت
+            </h2>
+
+
+            <p>
+                آشنایی با اعضای {{ company.name }}
+            </p>
+
+
+        </div>
+
+
+
+        <div class="team-grid">
+
+
+            {% for member in team %}
+
+
+            <div class="team-card">
+
+
+                <!-- عکس -->
+
+                <div class="team-image empty-photo">
+
+
+                    <span>
+                        عکس {{ member.name }}
+                    </span>
+
+
+                </div>
+
+
+
+                <!-- اطلاعات -->
+
+                <div class="team-info">
+
+
+                    <span>
+                        {{ member.position }}
+                    </span>
+
+
+                    <h3>
+                        {{ member.name }}
+                    </h3>
+
+
+
+                    {% if member.education %}
+
+                    <p>
+                        🎓 {{ member.education }}
+                    </p>
+
+                    {% endif %}
+
+
+
+                    {% if member.experience %}
+
+                    <p>
+                        💼 سابقه کاری:
+                        {{ member.experience }}
+                    </p>
+
+                    {% endif %}
+
+
+
+                    {% if member.specialty %}
+
+                    <p>
+                        🔧 تخصص:
+                        {{ member.specialty }}
+                    </p>
+
+                    {% endif %}
+
+
+
+                    {% if member.bio %}
+
+                    <p>
+                        {{ member.bio }}
+                    </p>
+
+                    {% endif %}
+
+
+
+                    <a
+                        href="#"
+                        class="resume-button"
+                    >
+                        مشاهده رزومه
+                    </a>
+
+
+                </div>
+
+
+            </div>
+
+
+            {% endfor %}
+
+
+        </div>
+
+
+    </div>
+
+
+</section>
+
+
+
+<!-- =====================================
+     PROJECTS
+===================================== -->
+
+<section
+    id="projects"
+    class="section"
+>
+
+
+    <div class="container">
+
+
+        <div class="section-title">
+
+
+            <span class="section-label">
+                نمونه کارها
+            </span>
+
+
+            <h2>
+                پروژه‌های انجام شده
+            </h2>
+
+
+            <p>
+                بخشی از پروژه‌های انجام شده توسط
+                {{ company.name }}
+            </p>
+
+
+        </div>
+
+
+
+        <div class="project-grid">
+
+
+            <!-- پروژه اول -->
+
+            <div class="project-card">
+
+
+                <img
+                    src="{{ url_for('static', filename='images/project1.jpeg') }}"
+                    alt="پروژه اول"
+                >
+
+
+                <div class="project-info">
+
+
+                    <span>
+                        پروژه شماره ۱
+                    </span>
+
+
+                    <h3>
+                        پروژه اول
+                    </h3>
+
+
+                    <p>
+                        توضیحات پروژه اول در این قسمت قرار می‌گیرد.
+                    </p>
+
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- پروژه دوم -->
+
+            <div class="project-card">
+
+
+                <img
+                    src="{{ url_for('static', filename='images/project2.jpeg') }}"
+                    alt="پروژه دوم"
+                >
+
+
+                <div class="project-info">
+
+
+                    <span>
+                        پروژه شماره ۲
+                    </span>
+
+
+                    <h3>
+                        پروژه دوم
+                    </h3>
+
+
+                    <p>
+                        توضیحات پروژه دوم در این قسمت قرار می‌گیرد.
+                    </p>
+
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- پروژه سوم -->
+
+            <div class="project-card">
+
+
+                <img
+                    src="{{ url_for('static', filename='images/project3.jpeg') }}"
+                    alt="پروژه سوم"
+                >
+
+
+                <div class="project-info">
+
+
+                    <span>
+                        پروژه شماره ۳
+                    </span>
+
+
+                    <h3>
+                        پروژه سوم
+                    </h3>
+
+
+                    <p>
+                        توضیحات پروژه سوم در این قسمت قرار می‌گیرد.
+                    </p>
+
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+</section>
+
+
+
+<!-- =====================================
+     CONTACT
+===================================== -->
+
+<section
+    id="contact"
+    class="contact"
+>
+
+
+    <div class="container contact-content">
+
+
+        <div>
+
+
+            <span class="section-label">
+                تماس با ما
+            </span>
+
+
+            <h2>
+                آماده همکاری با شما هستیم
+            </h2>
+
+
+            <p>
+                برای دریافت اطلاعات بیشتر با ما تماس بگیرید.
+            </p>
+
+
+        </div>
+
+
+
+        <div class="contact-info">
+
+
+            <p>
+                📞 {{ company.phone }}
+            </p>
+
+
+            <p>
+                ✉️ {{ company.email }}
+            </p>
+
+
+        </div>
+
+
+    </div>
+
+
+</section>
+
+
+
+<!-- =====================================
+     FOOTER
+===================================== -->
+
+<footer>
+
+
+    <p>
+        © 2026 {{ company.name }}
+        - تمامی حقوق محفوظ است.
+    </p>
+
+
+</footer>
+
+
+
+</body>
+
+</html>
